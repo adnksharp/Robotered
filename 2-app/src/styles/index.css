@@ -1,0 +1,92 @@
+@font-face {
+	font-family: 'Daisyogre';
+	font-style: normal;
+	font-weight: 400;
+	font-display: block;
+	src: url('../fonts/Daisyogre.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Matematica';
+	font-style: normal;
+	font-weight: 400;
+	font-display: block;
+	src: url('../fonts/Matematica.otf') format('opentype');
+}
+
+
+
+:root {
+	--background: #d0d0d0;
+	--foreground: #333;
+	--accent: #fff;
+	--good: #009bde;
+	--bad: #ff0000;
+	--disabled: #666;
+}
+
+/*
+@media (prefers-color-scheme: dark) {
+	:root {
+		--background: #333;
+		--foreground: #f0f0f0;
+		--accent: #ff6f61;
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		--background: #f0f0f0;
+		--foreground: #333;
+		--accent: #ff6f61;
+	}
+}
+*/
+
+*{
+	margin: 0;
+	padding: 0;
+	user-select: none;
+}
+
+body 
+{
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+		Arial, sans-serif;
+	height: 100vh;
+	width: 100vw;
+	background-color: var(--background);
+}
+
+.btn, select, .select-port, .port-items, .select-baud, .baud-items
+{
+	background-color: var(--accent);
+	border-radius: 2.7vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border: none;
+	cursor: pointer;
+	outline: none;
+	margin: 1vh;
+}
+
+.btn, select, .select-port, .select-baud
+{
+	height: 8vh;
+}
+.btn
+{
+	font-size: 4vh;
+	width: 8vh;
+}
+
+.fail
+{
+	color: var(--bad);
+}
+
+.success
+{
+	color: var(--good);
+}

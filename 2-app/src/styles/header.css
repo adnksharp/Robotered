@@ -1,0 +1,74 @@
+nav .btn:hover
+{
+	color: var(--good);
+}
+
+nav .btn:disabled
+{
+	color: var(--disabled);
+}
+
+nav .btn:active
+{
+	transform: scale(0.95);
+}
+
+select, .select-port
+{
+	font-size: 1.1em;
+	padding-left: 1vh;
+}
+
+#ports, .select-port, .port-items
+{
+	width: calc(100vw - 95vh);
+}
+
+#baud, .select-baud, .baud-items
+{
+	width: calc((100vw - 95vh) / 4);
+}
+
+header
+{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 1vh;
+}
+
+header *
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#status p
+{
+	cursor: default;
+}
+
+.blink
+{
+	animation: blink 1s infinite;
+}
+
+.blink:hover
+{
+	animation: none;
+}
+
+@keyframes blink
+{
+	0%, 29.9%, 59.9%, 100%
+	{
+		background-color: var(--accent);
+		color: var(--foreground);
+	}
+	30%, 60%, 99.9%
+	{
+		background-color: var(--foreground);
+		color: var(--accent);
+	}
+}

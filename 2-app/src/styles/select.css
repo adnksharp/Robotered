@@ -1,0 +1,57 @@
+#device
+{
+	position: relative;
+}
+
+#device select
+{
+	display: none;
+}
+
+.select-port::after, .select-baud::after
+{
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	padding: 10px;
+}
+
+.port-items div, .select-selected, .baud-items div
+{
+	cursor: pointer;
+	user-select: none;
+	height: 8vh;
+}
+
+.port-items, .baud-items
+{
+	position: absolute;
+	display: block;
+	background-color: var(--accent);
+	top: 100%;
+	right: 0;
+	z-index: 99;
+}
+
+.port-items 
+{
+	left: 10vh;
+}
+
+.baud-items
+{
+	right: 0;
+}
+
+.select-hide
+{
+	display: none;
+}
+
+.port-items div:hover, .same-as-selected, .baud-items div:hover
+{
+	background-color: var(--good);
+	color: white;
+	border-radius: 2.75vh;
+}

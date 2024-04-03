@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="Content-Security-Policy" content="script-src 'self'; style-src 'self' 'unsafe-inline';" />
+		<title>R A P P</title>
+		<link rel="stylesheet" href="./styles/index.css" />
+		<link rel="stylesheet" href="./styles/header.css" />
+		<link rel="stylesheet" href="./styles/text.css" />
+		<link rel="stylesheet" href="./styles/select.css" />
+		<link rel="stylesheet" href="./fonts/css/all.min.css" />
+		<link rel="stylesheet" href="./fonts/css/fontawesome.min.css" />
+	</head>
+	<body>
+		<header>
+			<nav>
+				<ul id="menu">
+					<!--
+					<button class="btn" id="home" disabled="true">
+						<i class="fa-solid fa-house"></i>
+					</button>
+					<button class="btn" id="history">
+						<i class="fa-solid fa-clock"></i>
+					</button>
+					-->
+					<button class="btn blink" id="ll">
+						<i class="fa-brands fa-hashnode"></i>
+					</button>
+				</ul>
+				<div id="device">
+					<select id="baud" disabled>
+						<option value="4800">4800</option>
+						<option value="9600">9600</option>
+						<option value="19200">19200</option>
+						<option value="38400">38400</option>
+						<option value="57600">57600</option>
+						<option value="115200">115200</option>
+					</select>
+					<select id="ports" disabled>
+						<option value="0">Selecciona un puerto</option>
+					</select>
+					<button class="btn" id="link" disabled>
+						<i class="fa-solid fa-code-commit"></i>
+					</button>
+				</div>
+			</nav>
+			<div id="status">
+				<p class="btn" id="server">
+					<i class="fa-solid fa-server fail"></i>
+				</p>
+				<p class="btn" id="robot">
+					<i class="fa-solid fa-microchip fail"></i>
+				</p>
+			</div>
+		</header>
+		<div id="text">
+			<div>
+				<p>Base:</p><span id="A"></span>
+			</div>
+			<div>
+				<p>Hombro:</p><span id="B"></span>
+			</div>
+			<div>
+				<p>Codo:</p><span id="C"></span>
+			</div>
+			<div>
+				<p>Muñeca en X:</p><span id="D"></span>
+			</div>
+			<div>
+				<p>Muñeca en Y:</p><span id="E"></span>
+			</div>
+			<div>
+				<p>Garra:</p><span id="F"></span>
+			</div>
+		</div>
+		<script src="./scripts/index.js"></script>
+	</body>
+</html>
