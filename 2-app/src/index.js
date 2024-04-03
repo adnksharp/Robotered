@@ -16,11 +16,12 @@ const createWindow = () => {
 			nodeIntegration: true,
 			enableRemoteModule: true,
 			defaultEncoding: 'UTF-8',
+			devTools: false,
 			preload: path.join(__dirname, 'preload.js'),
 		},
 	})
 
-	//mainWindow.setMenu(null)
+	mainWindow.setMenu(null)
 
 	mainWindow.loadURL(
 		url.format({
