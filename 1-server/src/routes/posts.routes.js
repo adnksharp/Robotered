@@ -6,6 +6,7 @@ const { Router } = require('express'),
 		Close,
 		Moves,
 		New,
+		Ping,
 		Update, 
 		Upgrade, 
 		Views
@@ -18,6 +19,7 @@ router.get('/robot', Upgrade) // send last update to app
 router.get('/available', Available) // get list of available robots
 router.post('/config', Config) // set serial port configuration
 router.get('/close', Close) // close serial port
+router.get('/ping', Ping)
 
 router.get('/history', Moves) // change history
 router.get('/clear', New) // reset all updates

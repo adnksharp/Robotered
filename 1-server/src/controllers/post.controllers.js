@@ -6,6 +6,12 @@ const Post = require('../models/Post.js'),
 var robot = undefined,
 	readlines = undefined
 
+function delay(n) {
+  return new Promise(function(resolve) {
+    setTimeout(resolve, n)
+  })
+}
+
 module.exports = {
 	Available: async function(req, res) {
 		//exec shell script
@@ -80,6 +86,35 @@ module.exports = {
 		print('mongo', 'database has been reset')
 		res.sendStatus(200)
 	},
+	Ping: async function(req, res) {
+
+		if (robot !== undefined) {
+			robot.write('35,70,105,140,175,120,', (err) => {
+				if (err) {
+					print('error', err.toString())
+					res.sendStatus(500)
+					return
+				}
+				print('serial', 'all')
+			})
+			await delay(2000)
+			robot.write('0,0,0,0,0,70,', (err) => {
+				if (err) {
+					print('error', err.toString())
+					res.sendStatus(500)
+					return
+				}
+				print('serial', 'zeros')
+			})
+			res.sendStatus(200)
+
+		}
+		else
+		{
+			print('serial', 'port closed')
+			res.sendStatus(200)
+		}
+	},
 	Update: async function(req, res) {
 		const { A, B, C, D, E, F } = req.body
 		
@@ -91,7 +126,7 @@ module.exports = {
 
 		//print('mongo', 'control updated')
 		if (robot !== undefined) {
-			robot.write(A + ',' + B + ',' + C + ',' + D + ',' + E + ',' + F + '\n', (err) => {
+			robot.write(A + ',' + B + ',' + C + ',' + D + ',' + E + ',' + F + ',\n', (err) => {
 				if (err) {
 					print('error', err.toString())
 					res.sendStatus(500)
