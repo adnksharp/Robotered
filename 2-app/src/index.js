@@ -21,7 +21,7 @@ const createWindow = () => {
 		},
 	})
 
-	mainWindow.setMenu(null)
+	mainWindow.setMenuBarVisibility(false)
 
 	mainWindow.loadURL(
 		url.format({

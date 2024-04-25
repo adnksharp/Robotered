@@ -31,6 +31,11 @@ module.exports = {
 	},
 	Config: function(req, res) {
 		const { port, baudrate } = req.body
+		if (robot !== undefined) {
+			print('serial', 'port ' + robot.path + ' already opened')
+			res.sendStatus(200)
+			return
+		}
 		robot = new SerialPort({
 			path: port,
 			baudRate: parseInt(baudrate),
@@ -45,6 +50,11 @@ module.exports = {
 		})
 	},
 	Close: function(req, res) {
+		if (robot === undefined) {
+			print('serial', 'port closed')
+			res.sendStatus(200)
+			return
+		}
 		robot.close((err) => {
 			if (err) {
 				print('error', err.toString())

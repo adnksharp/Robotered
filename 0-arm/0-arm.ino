@@ -8,7 +8,7 @@ Servo D;
 Servo E;
 Servo F;
 
-short val[] = {0, 0, 0, 0, 0, 0};
+short val[] = {0, 0, 0, 0, 0, 70};
 
 void setup() 
 {
