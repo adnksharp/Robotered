@@ -18,7 +18,6 @@ void serialEvent()
 		}
 	}
 }
-
 void serialEvent3()
 {
 	analogWrite(WEB, 0);
@@ -39,6 +38,11 @@ void serialEvent3()
 			);
 			analogWrite(WEB, 100);
 			analogWrite(HME, 0);
+		}
+		else if (status < 0)
+		{
+			delay(2000);
+			Serial3.println(100);
 		}
 	}
 }
@@ -65,12 +69,18 @@ void loop()
 	{
 		analogWrite(RXD, 50);
 		data[0] = abs(map(ema.read(analogRead(LX), 0), LX_MIN, LX_MAX, 0, 180));
-		data[1] = abs(map(ema.read(analogRead(LY), 1), LY_MIN, LY_MAX, 0, 180));
-		data[2] = abs(map(ema.read(analogRead(LT), 2), LT_MIN, LT_MAX, 0, 180));
-		data[3] = abs(map(ema.read(analogRead(RX), 3), RX_MIN, RX_MAX, 0, 180));
-		data[4] = abs(map(ema.read(analogRead(RY), 4), RY_MIN, RY_MAX, 0, 180));
+		data[1] = abs(map(ema.read(analogRead(LY), 1), LY_MIN, LY_MAX, -180, 180));
+		data[2] = abs(map(ema.read(analogRead(RX), 3), RX_MIN, RX_MAX, -180, 180));
+		data[3] = abs(map(ema.read(analogRead(LT), 2), LT_MIN, LT_MAX, 0, 180));
+		data[4] = abs(map(ema.read(analogRead(RY), 4), RY_MIN, RY_MAX, -180, 180) + 20);
 		data[5] = abs(map(ema.read(analogRead(RT), 5), RT_MIN, RT_MAX, 70, 120));
 	}
 	else
 		analogWrite(RXD, 0);
+	/*
+	Serial2.println(
+		String(data[0]) + "," + String(data[1]) + "," + String(data[2]) + 
+		"," + String(data[3]) + "," + String(data[4]) + "," + String(data[5]) + ","
+	);
+	*/
 }

@@ -12,6 +12,40 @@ function delay(n) {
   })
 }
 
+async function newRobot(port, baudrate, res) {
+	let ret = 200
+	robot = new SerialPort({
+		path: port,
+		baudRate: parseInt(baudrate),
+	}, (err) => {
+		if (err) {
+			print('error', err.toString())
+			ret = 500
+		}
+		else
+			print('serial', port + ' to ' + baudrate + ' opened')
+	})
+
+	robot.on('close', () => {
+		print('serial', 'port closed')
+		robot = undefined
+	})
+
+	robot.on('error', (err) => {
+		print('error', err.toString())
+		print('error', 'error with ' + port)
+		if (robot !== undefined)
+			robot.close()
+		else {
+			//call newRobot next to delay 2s
+			delay(1000).then(() => {
+				newRobot(port, baudrate, res)
+			})
+		}
+	})
+	return ret
+}
+
 module.exports = {
 	Available: async function(req, res) {
 		//exec shell script
@@ -23,31 +57,21 @@ module.exports = {
 			}
 			if (stderr) {
 				print('server', stderr.toString())
+				res.json({ zero: 0 })
 				return
 			}
 			print('server', 'serial config available')
 			res.json({ stdout })
 		})
 	},
-	Config: function(req, res) {
+	Config: async function(req, res) {
 		const { port, baudrate } = req.body
 		if (robot !== undefined) {
 			print('serial', 'port ' + robot.path + ' already opened')
 			res.sendStatus(200)
 			return
 		}
-		robot = new SerialPort({
-			path: port,
-			baudRate: parseInt(baudrate),
-		}, (err) => {
-			if (err) {
-				print('error', err.toString())
-				res.sendStatus(500)
-				return
-			}
-			print('serial', port + ' to ' + baudrate + ' opened')
-			res.sendStatus(200)
-		})
+		res.sendStatus(await newRobot(port, baudrate, res))
 	},
 	Close: function(req, res) {
 		if (robot === undefined) {
@@ -66,40 +90,24 @@ module.exports = {
 		})
 		robot = undefined
 	},
-	Moves: async function(req, res) {
-		for (let i = 0; i < 59; i++) {
-			const control = await Post.findOne({ myId: i + 1 }),
-				{ base, shoulder, elbow, wristx, wristy, gripper } = control
-			await Post.findOneAndUpdate(
-				{ myId: i },
-				{ base, shoulder, elbow, wristx, wristy, gripper },
-				{ new: true }
-			)
-		}
-		print('mongo', 'database has been changed')
-		res.sendStatus(200)
-	},
 	New: async function(req, res) {
 		await Post.deleteMany()
-		for (let i = 0; i < 60; i++) {
-			const newControl = new Post({
-				myId: i,
-				base: 0,
-				shoulder: 0,
-				elbow: 0,
-				wristx: 0,
-				wristy: 0,
-				gripper: 70
-			})
-			await newControl.save()
-		}
+		const newControl = new Post({
+			myId: 0,
+			base: 0,
+			shoulder: 0,
+			elbow: 0,
+			wristx: 0,
+			wristy: 0,
+			gripper: 70
+		})
+		await newControl.save()
 		print('mongo', 'database has been reset')
 		res.sendStatus(200)
 	},
 	Ping: async function(req, res) {
-
 		if (robot !== undefined) {
-			robot.write('35,70,105,140,175,120,', (err) => {
+			robot.write('180,90,90,90,90,120,', (err) => {
 				if (err) {
 					print('error', err.toString())
 					res.sendStatus(500)
@@ -107,17 +115,17 @@ module.exports = {
 				}
 				print('serial', 'all')
 			})
-			await delay(2000)
-			robot.write('0,0,0,0,0,70,', (err) => {
-				if (err) {
-					print('error', err.toString())
-					res.sendStatus(500)
-					return
-				}
-				print('serial', 'zeros')
+			delay(4000).then(() => {
+				robot.write('90,0,0,0,0,70,', (err) => {
+					if (err) {
+						print('error', err.toString())
+						res.sendStatus(500)
+						return
+					}
+					print('serial', 'zero')
+				})
 			})
 			res.sendStatus(200)
-
 		}
 		else
 		{
@@ -127,22 +135,18 @@ module.exports = {
 	},
 	Update: async function(req, res) {
 		const { A, B, C, D, E, F } = req.body
-		
 		const control = await Post.findOneAndUpdate(
-			{ myId: 59 },
+			{ myId: 0 },
 			{ base: A, shoulder: B, elbow: C, wristx: D, wristy: E, gripper: F },
 			{ new: true }
 		)
-
-		//print('mongo', 'control updated')
 		if (robot !== undefined) {
 			robot.write(A + ',' + B + ',' + C + ',' + D + ',' + E + ',' + F + ',\n', (err) => {
 				if (err) {
-					print('error', err.toString())
-					res.sendStatus(500)
+					print('error', err.toString())	
+					res.sendStatus(200)
 					return
 				}
-				print('serial', A + ',' + B + ',' + C + ',' + D + ',' + E + ',' + F)
 				res.sendStatus(200)
 			})
 		}
@@ -150,7 +154,7 @@ module.exports = {
 			res.sendStatus(200)
 	},
 	Upgrade: async function(req, res) {
-		const control = await Post.findOne({ myId: 59 }),
+		const control = await Post.findOne({ myId: 0 }),
 			{ base, shoulder, elbow, wristx, wristy, gripper } = control
 		res.json({ 
 			A: base, 
@@ -160,9 +164,5 @@ module.exports = {
 			E: wristy, 
 			F: gripper 
 		})
-	},
-	Views: async function(req, res) {
-		const control = await Post.find()
-		res.json(control)
 	}
 }

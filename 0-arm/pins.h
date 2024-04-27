@@ -7,4 +7,4 @@
 #define SERVO_MIN		0
 #define SERVO_MAX		180
 #define GRIPPER_MIN		70
-#define GRIPPER_MAX		180
+#define GRIPPER_MAX		120

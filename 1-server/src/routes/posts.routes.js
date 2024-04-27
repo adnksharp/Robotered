@@ -4,12 +4,10 @@ const { Router } = require('express'),
 		Available,
 		Config,
 		Close,
-		Moves,
 		New,
 		Ping,
 		Update, 
 		Upgrade, 
-		Views
 	} = require('../controllers/post.controllers.js')
 
 router.get('/status', (req, res) => res.sendStatus(200)) // check if server is running
@@ -20,9 +18,6 @@ router.get('/available', Available) // get list of available robots
 router.post('/config', Config) // set serial port configuration
 router.get('/close', Close) // close serial port
 router.get('/ping', Ping)
-
-router.get('/history', Moves) // change history
 router.get('/clear', New) // reset all updates
-router.get('/view', Views) // send all updates to app
 
 module.exports = router
