@@ -25,28 +25,33 @@
 	--disabled: #666;
 }
 
-/*
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
 	:root {
-		--background: #333;
-		--foreground: #f0f0f0;
-		--accent: #ff6f61;
+		--background: #eaeaea;
+		--foreground: #333;
+		--accent: #fff;
+		--good: #009bde;
+		--bad: #ff0000;
+		--disabled: #666;
 	}
 }
 
-@media (prefers-color-scheme: light) {
+@media (prefers-color-scheme: dark) {
 	:root {
-		--background: #f0f0f0;
-		--foreground: #333;
-		--accent: #ff6f61;
+		--background: #212326;
+		--foreground: #fff;
+		--accent: #000;
+		--good: #2bdbff;
+		--bad: #ff2b44;
+		--disabled: #666;
 	}
 }
-*/
 
 *{
 	margin: 0;
 	padding: 0;
 	user-select: none;
+	color: var(--foreground);
 }
 
 body 

@@ -49,12 +49,14 @@ header *
 	cursor: default;
 }
 
-.blink
+.blink,
+.blink *
 {
 	animation: blink 1s infinite;
 }
 
-.blink:hover
+.blink:hover,
+.blink *:hover
 {
 	animation: none;
 }

@@ -52,6 +52,6 @@
 .port-items div:hover, .same-as-selected, .baud-items div:hover
 {
 	background-color: var(--good);
-	color: white;
+	color: var(--accent);
 	border-radius: 2.75vh;
 }

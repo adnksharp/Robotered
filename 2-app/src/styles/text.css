@@ -10,15 +10,15 @@
 #text div
 {
 	width: 40vw;
-	background-color: var(--accent);
 	border-radius: 2.7vh;
 	height: 20vh;
 	margin: 3vh 5vw;
+	background-color: var(--accent);
 	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
+	flex-direction: column;
+	justify-content: space-around;
 }
+
 
 #text p
 {
@@ -31,7 +31,5 @@
 {
 	font-size: 3.5em;
 	font-family: 'Daisyogre';
-	width: 43%;
-	text-align: right;
-	padding-right: 2.5vw;
+	text-align: center;
 }
